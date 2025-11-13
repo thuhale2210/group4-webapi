@@ -1,0 +1,53 @@
+﻿using FreshSourceAPI.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace FreshSourceAPI.Repositories
+{
+    public interface IGenericRepository<T> where T : class
+    {
+        Task<List<T>> GetAllAsync();
+        Task<T?> GetByIdAsync(int id);
+        Task<T> AddAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(T entity);
+    }
+
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    {
+        private readonly AppDbContext _context;
+
+        public GenericRepository(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<List<T>> GetAllAsync()
+        {
+            return await _context.Set<T>().ToListAsync();
+        }
+
+        public async Task<T?> GetByIdAsync(int id)
+        {
+            return await _context.Set<T>().FindAsync(id);
+        }
+
+        public async Task<T> AddAsync(T entity)
+        {
+            _context.Set<T>().Add(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
+
+        public async Task UpdateAsync(T entity)
+        {
+            _context.Set<T>().Update(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(T entity)
+        {
+            _context.Set<T>().Remove(entity);
+            await _context.SaveChangesAsync();
+        }
+    }
+}
