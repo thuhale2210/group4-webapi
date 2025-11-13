@@ -16,7 +16,13 @@
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5080",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AWS_REGION": "us-east-1",
+        "PARAM_DB_HOST": "/freshsourcedb/host",
+        "PARAM_DB_PORT": "/freshsourcedb/port",
+        "PARAM_DB_USER": "/freshsourcedb/user",
+        "PARAM_DB_PASSWORD": "/freshsourcedb/password",
+        "PARAM_DB_NAME": "/freshsourcedb/name"
       }
     },
     "https": {
@@ -26,7 +32,13 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7264;http://localhost:5080",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AWS_REGION": "us-east-1",
+        "PARAM_DB_HOST": "/freshsourcedb/host",
+        "PARAM_DB_PORT": "/freshsourcedb/port",
+        "PARAM_DB_USER": "/freshsourcedb/user",
+        "PARAM_DB_PASSWORD": "/freshsourcedb/password",
+        "PARAM_DB_NAME": "/freshsourcedb/name"
       }
     },
     "IIS Express": {
@@ -34,7 +46,13 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AWS_REGION": "us-east-1",
+        "PARAM_DB_HOST": "/freshsourcedb/host",
+        "PARAM_DB_PORT": "/freshsourcedb/port",
+        "PARAM_DB_USER": "/freshsourcedb/user",
+        "PARAM_DB_PASSWORD": "/freshsourcedb/password",
+        "PARAM_DB_NAME": "/freshsourcedb/name"
       }
     }
   }

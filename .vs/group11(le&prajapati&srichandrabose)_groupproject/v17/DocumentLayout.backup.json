@@ -1,18 +1,26 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\hannadelala\\source\\repos\\group11(le\u0026prajapati\u0026srichandrabose)_groupproject\\",
+  "WorkspaceRootPath": "C:\\Users\\kietg\\Documents\\Bong\\Web API Group Project\\group4-webapi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{716E3989-271C-4DE7-876D-F44F10F89AFB}|FreshSourceAPI\\FreshSourceAPI.csproj|c:\\users\\hannadelala\\source\\repos\\group11(le\u0026prajapati\u0026srichandrabose)_groupproject\\freshsourceapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{716E3989-271C-4DE7-876D-F44F10F89AFB}|FreshSourceAPI\\FreshSourceAPI.csproj|c:\\users\\kietg\\documents\\bong\\web api group project\\group4-webapi\\freshsourceapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{716E3989-271C-4DE7-876D-F44F10F89AFB}|FreshSourceAPI\\FreshSourceAPI.csproj|solutionrelative:freshsourceapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{716E3989-271C-4DE7-876D-F44F10F89AFB}|FreshSourceAPI\\FreshSourceAPI.csproj|c:\\users\\kietg\\documents\\bong\\web api group project\\group4-webapi\\freshsourceapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{716E3989-271C-4DE7-876D-F44F10F89AFB}|FreshSourceAPI\\FreshSourceAPI.csproj|solutionrelative:freshsourceapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{716E3989-271C-4DE7-876D-F44F10F89AFB}|FreshSourceAPI\\FreshSourceAPI.csproj|c:\\users\\hannadelala\\source\\repos\\group11(le\u0026prajapati\u0026srichandrabose)_groupproject\\freshsourceapi\\freshsourceapi.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{716E3989-271C-4DE7-876D-F44F10F89AFB}|FreshSourceAPI\\FreshSourceAPI.csproj|solutionrelative:freshsourceapi\\freshsourceapi.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+      "AbsoluteMoniker": "D:0:0:{716E3989-271C-4DE7-876D-F44F10F89AFB}|FreshSourceAPI\\FreshSourceAPI.csproj|c:\\users\\kietg\\documents\\bong\\web api group project\\group4-webapi\\freshsourceapi\\entities\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{716E3989-271C-4DE7-876D-F44F10F89AFB}|FreshSourceAPI\\FreshSourceAPI.csproj|solutionrelative:freshsourceapi\\entities\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{716E3989-271C-4DE7-876D-F44F10F89AFB}|FreshSourceAPI\\FreshSourceAPI.csproj|c:\\users\\hannadelala\\source\\repos\\group11(le\u0026prajapati\u0026srichandrabose)_groupproject\\freshsourceapi\\freshsourceapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{716E3989-271C-4DE7-876D-F44F10F89AFB}|FreshSourceAPI\\FreshSourceAPI.csproj|solutionrelative:freshsourceapi\\freshsourceapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{716E3989-271C-4DE7-876D-F44F10F89AFB}|FreshSourceAPI\\FreshSourceAPI.csproj|c:\\users\\kietg\\documents\\bong\\web api group project\\group4-webapi\\freshsourceapi\\entities\\purchaseorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{716E3989-271C-4DE7-876D-F44F10F89AFB}|FreshSourceAPI\\FreshSourceAPI.csproj|solutionrelative:freshsourceapi\\entities\\purchaseorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{716E3989-271C-4DE7-876D-F44F10F89AFB}|FreshSourceAPI\\FreshSourceAPI.csproj|c:\\users\\kietg\\documents\\bong\\web api group project\\group4-webapi\\freshsourceapi\\entities\\supplier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{716E3989-271C-4DE7-876D-F44F10F89AFB}|FreshSourceAPI\\FreshSourceAPI.csproj|solutionrelative:freshsourceapi\\entities\\supplier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,44 +30,71 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Users\\hannadelala\\source\\repos\\group11(le\u0026prajapati\u0026srichandrabose)_groupproject\\FreshSourceAPI\\Properties\\launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\kietg\\Documents\\Bong\\Web API Group Project\\group4-webapi\\FreshSourceAPI\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "FreshSourceAPI\\Properties\\launchSettings.json",
-              "ToolTip": "C:\\Users\\hannadelala\\source\\repos\\group11(le\u0026prajapati\u0026srichandrabose)_groupproject\\FreshSourceAPI\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\kietg\\Documents\\Bong\\Web API Group Project\\group4-webapi\\FreshSourceAPI\\Properties\\launchSettings.json",
               "RelativeToolTip": "FreshSourceAPI\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAABHAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAADYAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-11-12T22:13:03.687Z",
+              "WhenOpened": "2025-11-13T21:52:36.921Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "FreshSourceAPI",
-              "DocumentMoniker": "C:\\Users\\hannadelala\\source\\repos\\group11(le\u0026prajapati\u0026srichandrabose)_groupproject\\FreshSourceAPI\\FreshSourceAPI.csproj",
-              "RelativeDocumentMoniker": "FreshSourceAPI\\FreshSourceAPI.csproj",
-              "ToolTip": "C:\\Users\\hannadelala\\source\\repos\\group11(le\u0026prajapati\u0026srichandrabose)_groupproject\\FreshSourceAPI\\FreshSourceAPI.csproj",
-              "RelativeToolTip": "FreshSourceAPI\\FreshSourceAPI.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-11-12T22:12:58.551Z",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\kietg\\Documents\\Bong\\Web API Group Project\\group4-webapi\\FreshSourceAPI\\Program.cs",
+              "RelativeDocumentMoniker": "FreshSourceAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\kietg\\Documents\\Bong\\Web API Group Project\\group4-webapi\\FreshSourceAPI\\Program.cs",
+              "RelativeToolTip": "FreshSourceAPI\\Program.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAQwCgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-12T22:44:39.247Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PurchaseOrder.cs",
+              "DocumentMoniker": "C:\\Users\\kietg\\Documents\\Bong\\Web API Group Project\\group4-webapi\\FreshSourceAPI\\Entities\\PurchaseOrder.cs",
+              "RelativeDocumentMoniker": "FreshSourceAPI\\Entities\\PurchaseOrder.cs",
+              "ToolTip": "C:\\Users\\kietg\\Documents\\Bong\\Web API Group Project\\group4-webapi\\FreshSourceAPI\\Entities\\PurchaseOrder.cs",
+              "RelativeToolTip": "FreshSourceAPI\\Entities\\PurchaseOrder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-12T22:15:27.008Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Supplier.cs",
+              "DocumentMoniker": "C:\\Users\\kietg\\Documents\\Bong\\Web API Group Project\\group4-webapi\\FreshSourceAPI\\Entities\\Supplier.cs",
+              "RelativeDocumentMoniker": "FreshSourceAPI\\Entities\\Supplier.cs",
+              "ToolTip": "C:\\Users\\kietg\\Documents\\Bong\\Web API Group Project\\group4-webapi\\FreshSourceAPI\\Entities\\Supplier.cs",
+              "RelativeToolTip": "FreshSourceAPI\\Entities\\Supplier.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-12T22:15:14.626Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "FreshSourceAPI",
-              "DocumentMoniker": "C:\\Users\\hannadelala\\source\\repos\\group11(le\u0026prajapati\u0026srichandrabose)_groupproject\\FreshSourceAPI\\FreshSourceAPI.csproj",
-              "RelativeDocumentMoniker": "FreshSourceAPI\\FreshSourceAPI.csproj",
-              "ToolTip": "C:\\Users\\hannadelala\\source\\repos\\group11(le\u0026prajapati\u0026srichandrabose)_groupproject\\FreshSourceAPI\\FreshSourceAPI.csproj",
-              "RelativeToolTip": "FreshSourceAPI\\FreshSourceAPI.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-11-12T21:52:17.768Z",
+              "Title": "Product.cs",
+              "DocumentMoniker": "C:\\Users\\kietg\\Documents\\Bong\\Web API Group Project\\group4-webapi\\FreshSourceAPI\\Entities\\Product.cs",
+              "RelativeDocumentMoniker": "FreshSourceAPI\\Entities\\Product.cs",
+              "ToolTip": "C:\\Users\\kietg\\Documents\\Bong\\Web API Group Project\\group4-webapi\\FreshSourceAPI\\Entities\\Product.cs",
+              "RelativeToolTip": "FreshSourceAPI\\Entities\\Product.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-12T22:14:59.987Z",
               "EditorCaption": ""
             }
           ]
