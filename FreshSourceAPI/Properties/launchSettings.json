@@ -18,6 +18,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "AWS_REGION": "us-east-1",
+        "AWS_ACCESS_KEY_ID": "dummy - replace with real ID",
+        "AWS_SECRET_ACCESS_KEY": "dummy - replace with real key",
         "PARAM_DB_HOST": "/freshsourcedb/host",
         "PARAM_DB_PORT": "/freshsourcedb/port",
         "PARAM_DB_USER": "/freshsourcedb/user",
@@ -34,6 +36,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "AWS_REGION": "us-east-1",
+        "AWS_ACCESS_KEY_ID": "dummy - replace with real ID",
+        "AWS_SECRET_ACCESS_KEY": "dummy - replace with real key",
         "PARAM_DB_HOST": "/freshsourcedb/host",
         "PARAM_DB_PORT": "/freshsourcedb/port",
         "PARAM_DB_USER": "/freshsourcedb/user",
@@ -48,6 +52,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "AWS_REGION": "us-east-1",
+        "AWS_ACCESS_KEY_ID": "dummy - replace with real ID",
+        "AWS_SECRET_ACCESS_KEY": "dummy - replace with real key",
         "PARAM_DB_HOST": "/freshsourcedb/host",
         "PARAM_DB_PORT": "/freshsourcedb/port",
         "PARAM_DB_USER": "/freshsourcedb/user",

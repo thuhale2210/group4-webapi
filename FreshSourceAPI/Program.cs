@@ -5,52 +5,60 @@ using FreshSourceAPI.Data;
 using FreshSourceAPI.Profiles;
 using FreshSourceAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Read region from env
+// Read region from env (default to us-east-1)
 var region = Environment.GetEnvironmentVariable("AWS_REGION") ?? "us-east-1";
 
 // Create SSM client
 var ssm = new AmazonSimpleSystemsManagementClient(RegionEndpoint.GetBySystemName(region));
 
-// Helper function
-async Task<string> GetParameterAsync(string name)
+// Helper: get required env var
+string GetRequiredEnv(string name) =>
+    Environment.GetEnvironmentVariable(name)
+    ?? throw new InvalidOperationException($"Environment variable '{name}' is not set");
+
+// Helper: read a parameter *value* from SSM given the env var name
+async Task<string> GetParameterFromEnvAsync(string envVarName)
 {
+    var parameterName = GetRequiredEnv(envVarName);
+
     var response = await ssm.GetParameterAsync(new GetParameterRequest
     {
-        Name = name,
+        Name = parameterName,
         WithDecryption = true
     });
 
     return response.Parameter.Value;
 }
 
-var dbHost = Environment.GetEnvironmentVariable("PARAM_DB_HOST");
-var dbPort = Environment.GetEnvironmentVariable("PARAM_DB_PORT");
-var dbUser = Environment.GetEnvironmentVariable("PARAM_DB_USER");
-var dbPassword = Environment.GetEnvironmentVariable("PARAM_DB_PASSWORD");
-var dbName = Environment.GetEnvironmentVariable("PARAM_DB_NAME");
+// --- actually fetch values from SSM ---
+var dbHost = await GetParameterFromEnvAsync("PARAM_DB_HOST");
+var dbPort = await GetParameterFromEnvAsync("PARAM_DB_PORT");
+var dbUser = await GetParameterFromEnvAsync("PARAM_DB_USER");
+var dbPassword = await GetParameterFromEnvAsync("PARAM_DB_PASSWORD");
+var dbName = await GetParameterFromEnvAsync("PARAM_DB_NAME");
 
-var connectionString = $"Server={dbHost},{dbPort};Database={dbName};User Id={dbUser};Password={dbPassword};Encrypt=False";
+// Build connection string
+var connectionString =
+    $"Server=tcp:{dbHost},{dbPort};" +
+    $"Database={dbName};" +
+    $"User Id={dbUser};" +
+    $"Password={dbPassword};" +
+    "Encrypt=False;TrustServerCertificate=True;";
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(connectionString));
 
-builder.Services.AddAutoMapper(cfg => { },
-    typeof(MappingProfile).Assembly);
-
+builder.Services.AddAutoMapper(cfg => { }, typeof(MappingProfile).Assembly);
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
 builder.Services.AddControllers().AddNewtonsoftJson();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

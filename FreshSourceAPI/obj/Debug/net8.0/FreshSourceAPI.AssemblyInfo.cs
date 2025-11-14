@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FreshSourceAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae522dec0a0170d73fcadae95104f898a62b7742")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+de369361fef90bdc6b0ed6f78bf81e49cfb04794")]
 [assembly: System.Reflection.AssemblyProductAttribute("FreshSourceAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FreshSourceAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
