@@ -4368,23 +4368,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\kietg\\.nuget\\packages\\": {},
+    "C:\\Users\\hannadelala\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kietg\\Documents\\Bong\\Web API Group Project\\group4-webapi\\FreshSourceAPI\\FreshSourceAPI.csproj",
+      "projectUniqueName": "C:\\Users\\hannadelala\\source\\repos\\group11(le&prajapati&srichandrabose)_groupproject\\FreshSourceAPI\\FreshSourceAPI.csproj",
       "projectName": "FreshSourceAPI",
-      "projectPath": "C:\\Users\\kietg\\Documents\\Bong\\Web API Group Project\\group4-webapi\\FreshSourceAPI\\FreshSourceAPI.csproj",
-      "packagesPath": "C:\\Users\\kietg\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kietg\\Documents\\Bong\\Web API Group Project\\group4-webapi\\FreshSourceAPI\\obj\\",
+      "projectPath": "C:\\Users\\hannadelala\\source\\repos\\group11(le&prajapati&srichandrabose)_groupproject\\FreshSourceAPI\\FreshSourceAPI.csproj",
+      "packagesPath": "C:\\Users\\hannadelala\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\hannadelala\\source\\repos\\group11(le&prajapati&srichandrabose)_groupproject\\FreshSourceAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\kietg\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\hannadelala\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4393,8 +4393,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {},
-        "https://pkgs.dev.azure.com/tle242-COMP367/Lab4-Question1/_packaging/StringUtilitiesFeed/nuget/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
@@ -4412,7 +4411,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.200"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -4476,7 +4475,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

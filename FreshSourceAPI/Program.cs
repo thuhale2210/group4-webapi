@@ -1,9 +1,12 @@
-using Amazon.SimpleSystemsManagement.Model;
-using Amazon.SimpleSystemsManagement;
 using Amazon;
+using Amazon.SimpleSystemsManagement;
+using Amazon.SimpleSystemsManagement.Model;
 using FreshSourceAPI.Data;
+using FreshSourceAPI.Profiles;
 using FreshSourceAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,29 +28,22 @@ async Task<string> GetParameterAsync(string name)
     return response.Parameter.Value;
 }
 
-var dbHost = Environment.GetEnvironmentVariable("FRESHSOURCE_DB_HOST");
-var dbPort = Environment.GetEnvironmentVariable("FRESHSOURCE_DB_PORT") ?? "1433";
-var dbUser = Environment.GetEnvironmentVariable("FRESHSOURCE_DB_USER");
-var dbPassword = Environment.GetEnvironmentVariable("FRESHSOURCE_DB_PASSWORD");
-var dbName = Environment.GetEnvironmentVariable("FRESHSOURCE_DB_NAME");
-
-if (string.IsNullOrWhiteSpace(dbHost) ||
-    string.IsNullOrWhiteSpace(dbUser) ||
-    string.IsNullOrWhiteSpace(dbPassword) ||
-    string.IsNullOrWhiteSpace(dbName))
-{
-    throw new InvalidOperationException("Database connection string is not configured.");
-}
+var dbHost = Environment.GetEnvironmentVariable("PARAM_DB_HOST");
+var dbPort = Environment.GetEnvironmentVariable("PARAM_DB_PORT");
+var dbUser = Environment.GetEnvironmentVariable("PARAM_DB_USER");
+var dbPassword = Environment.GetEnvironmentVariable("PARAM_DB_PASSWORD");
+var dbName = Environment.GetEnvironmentVariable("PARAM_DB_NAME");
 
 var connectionString = $"Server={dbHost},{dbPort};Database={dbName};User Id={dbUser};Password={dbPassword};Encrypt=False";
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
+builder.Services.AddAutoMapper(cfg => { },
+    typeof(MappingProfile).Assembly);
+
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-builder.Services
-    .AddControllers()
-    .AddNewtonsoftJson();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
