@@ -1,0 +1,56 @@
+﻿@model MegaMartClient.Models.Dto.ProductReadDto
+
+@{
+    ViewData["Title"] = "Delete Product";
+}
+
+<h1>Delete Product</h1>
+
+<h4 class="text-danger">Are you sure you want to delete this product?</h4>
+<hr />
+
+<div class="row mt-3">
+    <div class="col-md-4">
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl"
+                 alt="@Model.Name"
+                 class="img-fluid rounded shadow-sm" />
+        }
+        else
+        {
+            <div class="border rounded bg-light d-flex align-items-center justify-content-center"
+                 style="height:200px;">
+                <span class="text-muted">No image</span>
+            </div>
+        }
+    </div>
+
+    <div class="col-md-8">
+        <dl class="row">
+            <dt class="col-sm-3">Name</dt>
+            <dd class="col-sm-9">@Model.Name</dd>
+
+            <dt class="col-sm-3">Category</dt>
+            <dd class="col-sm-9">@Model.Category</dd>
+
+            <dt class="col-sm-3">Unit Price</dt>
+            <dd class="col-sm-9">@Model.UnitPrice.ToString("C")</dd>
+
+            <dt class="col-sm-3">Quantity</dt>
+            <dd class="col-sm-9">@Model.QuantityOnHand</dd>
+
+            <dt class="col-sm-3">Reorder Level</dt>
+            <dd class="col-sm-9">@Model.ReorderLevel</dd>
+
+            <dt class="col-sm-3">Supplier</dt>
+            <dd class="col-sm-9">@Model.SupplierId</dd>
+        </dl>
+
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger me-2">Delete</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
