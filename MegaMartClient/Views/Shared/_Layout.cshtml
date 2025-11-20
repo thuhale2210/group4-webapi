@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MegaMartClient</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MegaMartClient.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
+                    MegaMartClient
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav" aria-controls="navbarNav"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+
+                        <!-- Home -->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">
+                                Home
+                            </a>
+                        </li>
+
+                        <!-- Products dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="productsDropdown"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Products
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="productsDropdown">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Products" asp-action="Index">
+                                        All Products
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Products" asp-action="Create">
+                                        Create Product
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Products" asp-action="LowStock">
+                                        Low Stock Alerts
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Analytics" asp-action="Index">
+                                        Analytics Dashboard
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Suppliers dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="suppliersDropdown"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Suppliers
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="suppliersDropdown">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Suppliers" asp-action="Index">
+                                        All Suppliers
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Suppliers" asp-action="Create">
+                                        Create Supplier
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Purchase Orders dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="poDropdown"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Purchase Orders
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="poDropdown">
+                                <li>
+                                    <a class="dropdown-item" asp-controller="PurchaseOrders" asp-action="Index">
+                                        All Purchase Orders
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="PurchaseOrders" asp-action="Create">
+                                        Create Purchase Order
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Privacy (or Settings/etc.) -->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Privacy">
+                                Privacy
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - MegaMartClient - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
