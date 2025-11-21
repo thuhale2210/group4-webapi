@@ -1,9 +1,10 @@
 ﻿namespace MegaMartClient.Models.Dto
 {
-    public record SupplierReadDto(
-        int Id,
-        string Name,
-        string ContactEmail,
-        string Phone
-    );
+    public class SupplierReadDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string ContactEmail { get; set; }
+        public string Phone { get; set; }
+    }
 }

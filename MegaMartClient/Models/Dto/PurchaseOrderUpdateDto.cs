@@ -1,9 +1,10 @@
 ﻿namespace MegaMartClient.Models.Dto
 {
-    public record PurchaseOrderUpdateDto(
-        string Status,
-        int ProductId,
-        int Quantity,
-        int SupplierId
-    );
+    public class PurchaseOrderUpdateDto
+    {
+        public string Status { get; set; } = string.Empty;
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+        public int SupplierId { get; set; }
+    }
 }

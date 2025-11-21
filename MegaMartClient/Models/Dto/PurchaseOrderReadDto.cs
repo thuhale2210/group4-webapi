@@ -1,11 +1,12 @@
 ﻿namespace MegaMartClient.Models.Dto
 {
-    public record PurchaseOrderReadDto(
-        int Id,
-        DateTime CreatedAt,
-        string Status,
-        int ProductId,
-        int Quantity,
-        int SupplierId
-    );
+    public class PurchaseOrderReadDto
+    {
+        public int Id { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public string Status { get; set; } = string.Empty;
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+        public int SupplierId { get; set; }
+    }
 }

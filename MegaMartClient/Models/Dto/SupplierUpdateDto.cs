@@ -1,8 +1,9 @@
 ﻿namespace MegaMartClient.Models.Dto
 {
-    public record SupplierUpdateDto(
-        string Name,
-        string ContactEmail,
-        string Phone
-    );
+    public class SupplierUpdateDto
+    {
+        public string Name { get; set; } = string.Empty;
+        public string ContactEmail { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
+    }
 }

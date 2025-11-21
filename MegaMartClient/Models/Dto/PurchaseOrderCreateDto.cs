@@ -1,8 +1,9 @@
 ﻿namespace MegaMartClient.Models.Dto
 {
-    public record PurchaseOrderCreateDto(
-        int ProductId,
-        int Quantity,
-        int SupplierId
-    );
+    public class PurchaseOrderCreateDto
+    {
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+        public int SupplierId { get; set; }
+    }
 }
