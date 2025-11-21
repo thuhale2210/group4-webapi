@@ -1,0 +1,26 @@
+﻿@model MegaMartClient.Models.Dto.SupplierReadDto
+
+@{
+    ViewData["Title"] = "Supplier Details";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-3">Supplier Details</h1>
+
+    <dl class="row">
+        <dt class="col-sm-3">Id</dt>
+        <dd class="col-sm-9">@Model.Id</dd>
+
+        <dt class="col-sm-3">Name</dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9">@Model.ContactEmail</dd>
+
+        <dt class="col-sm-3">Phone</dt>
+        <dd class="col-sm-9">@Model.Phone</dd>
+    </dl>
+
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to list</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary ms-2">Edit</a>
+</div>

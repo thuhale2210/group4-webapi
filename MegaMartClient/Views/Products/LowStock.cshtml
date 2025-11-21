@@ -1,0 +1,93 @@
+﻿@model IEnumerable<MegaMartClient.Models.Dto.ProductReadDto>
+
+@{
+    ViewData["Title"] = "Low Stock Alerts";
+
+    // Simple mapping from SupplierId -> SupplierName for mock data
+    var supplierNames = new Dictionary<int, string>
+    {
+        { 1, "Fresh Farms Ltd." },
+        { 2, "Organic Harvest Co." },
+        { 3, "DairyPure Suppliers" }
+    };
+}
+
+<div class="container mt-4">
+    <h1 class="mb-3">Low Stock Alerts</h1>
+
+    <p class="text-muted">
+        Showing products where <strong>QuantityOnHand ≤ ReorderLevel</strong>.
+        This page is currently using <strong>mock data</strong> for UI/demo only.
+    </p>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-success mt-3">
+            All products are above their reorder level. No low stock alerts right now.
+        </div>
+    }
+    else
+    {
+        <table class="table table-striped table-hover mt-3">
+            <thead class="table-light">
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Qty On Hand</th>
+                    <th>Reorder Level</th>
+                    <th>Supplier</th>
+                    <th style="width: 160px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model)
+                {
+                    // Resolve supplier name from SupplierId
+                    var supplierName = supplierNames.ContainsKey(p.SupplierId)
+                    ? supplierNames[p.SupplierId]
+                    : $"Supplier #{p.SupplierId}";
+
+                    <tr>
+                        <td>
+                            @if (!string.IsNullOrEmpty(p.ImageUrl))
+                            {
+                                <img src="@p.ImageUrl"
+                                     alt="@p.Name"
+                                     style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;" />
+                            }
+                        </td>
+                        <td>@p.Name</td>
+                        <td>@p.Category</td>
+                        <td class="text-danger fw-bold">@p.QuantityOnHand</td>
+                        <td>@p.ReorderLevel</td>
+                        <td>
+                            <a asp-controller="Suppliers"
+                               asp-action="Details"
+                               asp-route-id="@p.SupplierId">
+                                @supplierName
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-controller="PurchaseOrders"
+                               asp-action="Create"
+                               asp-route-productId="@p.Id"
+                               asp-route-supplierId="@p.SupplierId"
+                               asp-route-productName="@p.Name"
+                               asp-route-currentQty="@p.QuantityOnHand"
+                               asp-route-reorderLevel="@p.ReorderLevel"
+                               class="btn btn-sm btn-success">
+                                Order
+                            </a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <a asp-controller="Products" asp-action="Index" class="btn btn-outline-secondary mt-3">
+        Back to Products
+    </a>
+</div>
