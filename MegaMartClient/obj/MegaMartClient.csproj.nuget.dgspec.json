@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mayuran\\source\\repos\\group4-webapi\\MegaMartClient\\MegaMartClient.csproj": {}
+    "C:\\Users\\mayuran\\Source\\Repos\\group4-webapi\\MegaMartClient\\MegaMartClient.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mayuran\\source\\repos\\group4-webapi\\MegaMartClient\\MegaMartClient.csproj": {
+    "C:\\Users\\mayuran\\Source\\Repos\\group4-webapi\\MegaMartClient\\MegaMartClient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mayuran\\source\\repos\\group4-webapi\\MegaMartClient\\MegaMartClient.csproj",
+        "projectUniqueName": "C:\\Users\\mayuran\\Source\\Repos\\group4-webapi\\MegaMartClient\\MegaMartClient.csproj",
         "projectName": "MegaMartClient",
-        "projectPath": "C:\\Users\\mayuran\\source\\repos\\group4-webapi\\MegaMartClient\\MegaMartClient.csproj",
+        "projectPath": "C:\\Users\\mayuran\\Source\\Repos\\group4-webapi\\MegaMartClient\\MegaMartClient.csproj",
         "packagesPath": "C:\\Users\\mayuran\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\mayuran\\source\\repos\\group4-webapi\\MegaMartClient\\obj\\",
         "projectStyle": "PackageReference",

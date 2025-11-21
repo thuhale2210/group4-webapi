@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MegaMartClient")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+51418445efe24cf380c314922bf4be9e8f539685")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cb5f617a99b1ca59156b2aa1a9b5c35c8acb44e3")]
 [assembly: System.Reflection.AssemblyProductAttribute("MegaMartClient")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MegaMartClient")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
