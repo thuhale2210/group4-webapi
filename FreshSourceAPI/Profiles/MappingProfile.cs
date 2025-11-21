@@ -12,15 +12,18 @@ public class MappingProfile : Profile
         CreateMap<Product, ProductReadDto>();
         CreateMap<ProductCreateDto, Product>();
         CreateMap<ProductUpdateDto, Product>();
+        CreateMap<Product, ProductUpdateDto>();
 
         // Supplier
         CreateMap<Supplier, SupplierReadDto>();
         CreateMap<SupplierCreateDto, Supplier>();
         CreateMap<SupplierUpdateDto, Supplier>();
+        CreateMap<Supplier, SupplierUpdateDto>();
 
         // PurchaseOrder
         CreateMap<PurchaseOrder, PurchaseOrderReadDto>();
         CreateMap<PurchaseOrderCreateDto, PurchaseOrder>();
         CreateMap<PurchaseOrderUpdateDto, PurchaseOrder>();
+        CreateMap<PurchaseOrder, PurchaseOrderUpdateDto>();
     }
 }

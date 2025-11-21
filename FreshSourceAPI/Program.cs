@@ -8,13 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Read region from env (default to us-east-1)
 var region = Environment.GetEnvironmentVariable("AWS_REGION") ?? "us-east-1";
 
 // Create SSM client
 var ssm = new AmazonSimpleSystemsManagementClient(RegionEndpoint.GetBySystemName(region));
 
-// Helper: get required env var
 string GetRequiredEnv(string name) =>
     Environment.GetEnvironmentVariable(name)
     ?? throw new InvalidOperationException($"Environment variable '{name}' is not set");
@@ -33,7 +31,7 @@ async Task<string> GetParameterFromEnvAsync(string envVarName)
     return response.Parameter.Value;
 }
 
-// --- actually fetch values from SSM ---
+// Actually fetch values from SSM
 var dbHost = await GetParameterFromEnvAsync("PARAM_DB_HOST");
 var dbPort = await GetParameterFromEnvAsync("PARAM_DB_PORT");
 var dbUser = await GetParameterFromEnvAsync("PARAM_DB_USER");
