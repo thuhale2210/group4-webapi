@@ -1,5 +1,7 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Net.Http.Json;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using MegaMartClient.Models;
 using MegaMartClient.Models.Dto;
@@ -13,24 +15,25 @@ namespace MegaMartClient.Services
         public SmartStockApiClient(HttpClient httpClient, IOptions<SmartStockApiOptions> options)
         {
             _httpClient = httpClient;
+
             var opt = options.Value;
-            _httpClient.BaseAddress = new Uri(opt.BaseUrl);
+            _httpClient.BaseAddress = new System.Uri(opt.BaseUrl);
 
             if (!string.IsNullOrEmpty(opt.ApiKey))
             {
+                // For Apigee / x-api-key protected APIs
                 _httpClient.DefaultRequestHeaders.Add("x-api-key", opt.ApiKey);
             }
         }
 
-        // ===== Products =====
+        // ===================== PRODUCTS =====================
 
         public async Task<IEnumerable<ProductReadDto>> GetProductsAsync()
         {
-            var response = await _httpClient.GetAsync("/api/Products"); // or /api/Product if that's your route
-            response.EnsureSuccessStatusCode();
+            var result = await _httpClient
+                .GetFromJsonAsync<IEnumerable<ProductReadDto>>("/api/Products");
 
-            return await response.Content.ReadFromJsonAsync<IEnumerable<ProductReadDto>>()
-                   ?? Enumerable.Empty<ProductReadDto>();
+            return result ?? new List<ProductReadDto>();
         }
 
         public async Task<ProductReadDto?> GetProductAsync(int id)
@@ -44,13 +47,10 @@ namespace MegaMartClient.Services
             return await response.Content.ReadFromJsonAsync<ProductReadDto>();
         }
 
-        public async Task<ProductReadDto> CreateProductAsync(ProductCreateDto dto)
+        public async Task CreateProductAsync(ProductCreateDto dto)
         {
             var response = await _httpClient.PostAsJsonAsync("/api/Products", dto);
             response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadFromJsonAsync<ProductReadDto>()
-                   ?? throw new InvalidOperationException("API did not return created product.");
         }
 
         public async Task UpdateProductAsync(int id, ProductUpdateDto dto)
@@ -65,15 +65,14 @@ namespace MegaMartClient.Services
             response.EnsureSuccessStatusCode();
         }
 
-        // ===== Suppliers =====
+        // ===================== SUPPLIERS =====================
 
         public async Task<IEnumerable<SupplierReadDto>> GetSuppliersAsync()
         {
-            var response = await _httpClient.GetAsync("/api/Suppliers");
-            response.EnsureSuccessStatusCode();
+            var result = await _httpClient
+                .GetFromJsonAsync<IEnumerable<SupplierReadDto>>("/api/Suppliers");
 
-            return await response.Content.ReadFromJsonAsync<IEnumerable<SupplierReadDto>>()
-                   ?? Enumerable.Empty<SupplierReadDto>();
+            return result ?? new List<SupplierReadDto>();
         }
 
         public async Task<SupplierReadDto?> GetSupplierAsync(int id)
@@ -87,13 +86,10 @@ namespace MegaMartClient.Services
             return await response.Content.ReadFromJsonAsync<SupplierReadDto>();
         }
 
-        public async Task<SupplierReadDto> CreateSupplierAsync(SupplierCreateDto dto)
+        public async Task CreateSupplierAsync(SupplierCreateDto dto)
         {
             var response = await _httpClient.PostAsJsonAsync("/api/Suppliers", dto);
             response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadFromJsonAsync<SupplierReadDto>()
-                   ?? throw new InvalidOperationException("API did not return created supplier.");
         }
 
         public async Task UpdateSupplierAsync(int id, SupplierUpdateDto dto)
@@ -108,15 +104,14 @@ namespace MegaMartClient.Services
             response.EnsureSuccessStatusCode();
         }
 
-        // ===== Purchase Orders =====
+        // ===================== PURCHASE ORDERS =====================
 
         public async Task<IEnumerable<PurchaseOrderReadDto>> GetPurchaseOrdersAsync()
         {
-            var response = await _httpClient.GetAsync("/api/PurchaseOrders");
-            response.EnsureSuccessStatusCode();
+            var result = await _httpClient
+                .GetFromJsonAsync<IEnumerable<PurchaseOrderReadDto>>("/api/PurchaseOrders");
 
-            return await response.Content.ReadFromJsonAsync<IEnumerable<PurchaseOrderReadDto>>()
-                   ?? Enumerable.Empty<PurchaseOrderReadDto>();
+            return result ?? new List<PurchaseOrderReadDto>();
         }
 
         public async Task<PurchaseOrderReadDto?> GetPurchaseOrderAsync(int id)
@@ -130,13 +125,10 @@ namespace MegaMartClient.Services
             return await response.Content.ReadFromJsonAsync<PurchaseOrderReadDto>();
         }
 
-        public async Task<PurchaseOrderReadDto> CreatePurchaseOrderAsync(PurchaseOrderCreateDto dto)
+        public async Task CreatePurchaseOrderAsync(PurchaseOrderCreateDto dto)
         {
             var response = await _httpClient.PostAsJsonAsync("/api/PurchaseOrders", dto);
             response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadFromJsonAsync<PurchaseOrderReadDto>()
-                   ?? throw new InvalidOperationException("API did not return created purchase order.");
         }
 
         public async Task UpdatePurchaseOrderAsync(int id, PurchaseOrderUpdateDto dto)
@@ -150,6 +142,5 @@ namespace MegaMartClient.Services
             var response = await _httpClient.DeleteAsync($"/api/PurchaseOrders/{id}");
             response.EnsureSuccessStatusCode();
         }
-
     }
 }

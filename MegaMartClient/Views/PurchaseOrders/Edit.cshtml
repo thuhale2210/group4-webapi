@@ -1,29 +1,64 @@
 ﻿@model MegaMartClient.Models.Dto.PurchaseOrderUpdateDto
 
-<h2>Edit Purchase Order</h2>
+@{
+    ViewData["Title"] = "Edit Purchase Order";
+    var id = ViewBag.Id as int? ?? 0;
+    var createdAt = ViewBag.CreatedAt as DateTime?;
+}
 
-<form asp-action="Edit" method="post">
-    <div class="form-group">
-        <label>Product Id</label>
-        <input asp-for="ProductId" class="form-control" />
-    </div>
+<div class="container mt-4">
+    <h1 class="mb-4">Edit Purchase Order</h1>
 
-    <div class="form-group">
-        <label>Supplier Id</label>
-        <input asp-for="SupplierId" class="form-control" />
-    </div>
+    <form asp-action="Edit" method="post" asp-route-id="@id">
+        <div class="mb-3">
+            <label class="form-label">Order Id</label>
+            <input class="form-control" value="@id" disabled />
+        </div>
 
-    <div class="form-group">
-        <label>Quantity</label>
-        <input asp-for="Quantity" class="form-control" />
-    </div>
+        @if (createdAt.HasValue)
+        {
+            <div class="mb-3">
+                <label class="form-label">Created At</label>
+                <input class="form-control" value="@createdAt.Value.ToString("yyyy-MM-dd HH:mm")" disabled />
+            </div>
+        }
 
-    <div class="form-group">
-        <label>Status</label>
-        <input asp-for="Status" class="form-control" />
-    </div>
+        <div class="mb-3">
+            <label asp-for="Status" class="form-label"></label>
+            <select asp-for="Status" class="form-select">
+                <option value="Pending">Pending</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Received">Received</option>
+                <option value="Cancelled">Cancelled</option>
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-</form>
+        <div class="mb-3">
+            <label asp-for="ProductId" class="form-label"></label>
+            <input asp-for="ProductId" class="form-control" />
+            <span asp-validation-for="ProductId" class="text-danger"></span>
+        </div>
 
-<a asp-action="Index">Back to List</a>
+        <div class="mb-3">
+            <label asp-for="Quantity" class="form-label"></label>
+            <input asp-for="Quantity" class="form-control" />
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SupplierId" class="form-label"></label>
+            <input asp-for="SupplierId" class="form-control" />
+            <span asp-validation-for="SupplierId" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-action="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,19 +1,58 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using MegaMartClient.Models.ViewModels;
+using MegaMartClient.Services;
 
 namespace MegaMartClient.Controllers
 {
     public class AnalyticsController : Controller
     {
-        // GET: /Analytics
-        public IActionResult Index()
-        {
-            // TEMP: mock stats for the dashboard
-            ViewBag.TotalProducts = 12;
-            ViewBag.LowStockCount = 3;
-            ViewBag.TotalSuppliers = 5;
-            ViewBag.OpenPurchaseOrders = 4;
+        private readonly ISmartStockApiClient _api;
 
-            return View();
+        public AnalyticsController(ISmartStockApiClient api)
+        {
+            _api = api;
+        }
+
+        // GET: /Analytics
+        public async Task<IActionResult> Index()
+        {
+            // Fetch live data from API
+            var products = (await _api.GetProductsAsync()).ToList();
+            var suppliers = (await _api.GetSuppliersAsync()).ToList();
+            var purchaseOrders = (await _api.GetPurchaseOrdersAsync()).ToList();
+
+            var lowStockProducts = products
+                .Where(p => p.QuantityOnHand <= p.ReorderLevel)
+                .ToList();
+
+            var orderedPOs = purchaseOrders
+                .OrderByDescending(po => po.CreatedAt)
+                .ToList();
+
+            var vm = new AnalyticsViewModel
+            {
+                // Products
+                TotalProducts = products.Count,
+                LowStockProducts = lowStockProducts.Count,
+                LowStockProductList = lowStockProducts,
+
+                // Suppliers
+                TotalSuppliers = suppliers.Count,
+
+                // Purchase Orders
+                TotalPurchaseOrders = purchaseOrders.Count,
+                PendingOrders = purchaseOrders.Count(po => po.Status == "Pending"),
+                ConfirmedOrders = purchaseOrders.Count(po => po.Status == "Confirmed"),
+                ReceivedOrders = purchaseOrders.Count(po => po.Status == "Received"),
+                CancelledOrders = purchaseOrders.Count(po => po.Status == "Cancelled"),
+
+                // Take top 5 recent orders
+                RecentOrders = orderedPOs.Take(5).ToList()
+            };
+
+            return View(vm);
         }
     }
 }

@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Mac\\Home\\Documents\\API Engineering & Cloud\\group4-webapi-main\\MegaMartClient\\MegaMartClient.csproj",
+      "projectUniqueName": "C:\\Users\\mayuran\\source\\repos\\group4-webapi\\MegaMartClient\\MegaMartClient.csproj",
       "projectName": "MegaMartClient",
-      "projectPath": "C:\\Mac\\Home\\Documents\\API Engineering & Cloud\\group4-webapi-main\\MegaMartClient\\MegaMartClient.csproj",
+      "projectPath": "C:\\Users\\mayuran\\source\\repos\\group4-webapi\\MegaMartClient\\MegaMartClient.csproj",
       "packagesPath": "C:\\Users\\mayuran\\.nuget\\packages\\",
-      "outputPath": "C:\\Mac\\Home\\Documents\\API Engineering & Cloud\\group4-webapi-main\\MegaMartClient\\obj\\",
+      "outputPath": "C:\\Users\\mayuran\\source\\repos\\group4-webapi\\MegaMartClient\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
