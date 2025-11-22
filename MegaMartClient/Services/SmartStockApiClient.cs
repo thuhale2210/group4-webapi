@@ -21,8 +21,8 @@ namespace MegaMartClient.Services
 
             if (!string.IsNullOrEmpty(opt.ApiKey))
             {
-                // For Apigee / x-api-key protected APIs
-                _httpClient.DefaultRequestHeaders.Add("x-api-key", opt.ApiKey);
+                _httpClient.DefaultRequestHeaders.Remove("apikey");
+                _httpClient.DefaultRequestHeaders.Add("apikey", opt.ApiKey);
             }
         }
 
@@ -31,14 +31,14 @@ namespace MegaMartClient.Services
         public async Task<IEnumerable<ProductReadDto>> GetProductsAsync()
         {
             var result = await _httpClient
-                .GetFromJsonAsync<IEnumerable<ProductReadDto>>("/api/Products");
+                .GetFromJsonAsync<IEnumerable<ProductReadDto>>("Products");
 
             return result ?? new List<ProductReadDto>();
         }
 
         public async Task<ProductReadDto?> GetProductAsync(int id)
         {
-            var response = await _httpClient.GetAsync($"/api/Products/{id}");
+            var response = await _httpClient.GetAsync($"Products/{id}");
 
             if (response.StatusCode == HttpStatusCode.NotFound)
                 return null;
@@ -49,19 +49,19 @@ namespace MegaMartClient.Services
 
         public async Task CreateProductAsync(ProductCreateDto dto)
         {
-            var response = await _httpClient.PostAsJsonAsync("/api/Products", dto);
+            var response = await _httpClient.PostAsJsonAsync("Products", dto);
             response.EnsureSuccessStatusCode();
         }
 
         public async Task UpdateProductAsync(int id, ProductUpdateDto dto)
         {
-            var response = await _httpClient.PutAsJsonAsync($"/api/Products/{id}", dto);
+            var response = await _httpClient.PutAsJsonAsync($"Products/{id}", dto);
             response.EnsureSuccessStatusCode();
         }
 
         public async Task DeleteProductAsync(int id)
         {
-            var response = await _httpClient.DeleteAsync($"/api/Products/{id}");
+            var response = await _httpClient.DeleteAsync($"Products/{id}");
             response.EnsureSuccessStatusCode();
         }
 
@@ -70,14 +70,14 @@ namespace MegaMartClient.Services
         public async Task<IEnumerable<SupplierReadDto>> GetSuppliersAsync()
         {
             var result = await _httpClient
-                .GetFromJsonAsync<IEnumerable<SupplierReadDto>>("/api/Suppliers");
+                .GetFromJsonAsync<IEnumerable<SupplierReadDto>>("Suppliers");
 
             return result ?? new List<SupplierReadDto>();
         }
 
         public async Task<SupplierReadDto?> GetSupplierAsync(int id)
         {
-            var response = await _httpClient.GetAsync($"/api/Suppliers/{id}");
+            var response = await _httpClient.GetAsync($"Suppliers/{id}");
 
             if (response.StatusCode == HttpStatusCode.NotFound)
                 return null;
@@ -88,19 +88,19 @@ namespace MegaMartClient.Services
 
         public async Task CreateSupplierAsync(SupplierCreateDto dto)
         {
-            var response = await _httpClient.PostAsJsonAsync("/api/Suppliers", dto);
+            var response = await _httpClient.PostAsJsonAsync("Suppliers", dto);
             response.EnsureSuccessStatusCode();
         }
 
         public async Task UpdateSupplierAsync(int id, SupplierUpdateDto dto)
         {
-            var response = await _httpClient.PutAsJsonAsync($"/api/Suppliers/{id}", dto);
+            var response = await _httpClient.PutAsJsonAsync($"Suppliers/{id}", dto);
             response.EnsureSuccessStatusCode();
         }
 
         public async Task DeleteSupplierAsync(int id)
         {
-            var response = await _httpClient.DeleteAsync($"/api/Suppliers/{id}");
+            var response = await _httpClient.DeleteAsync($"Suppliers/{id}");
             response.EnsureSuccessStatusCode();
         }
 
@@ -109,14 +109,14 @@ namespace MegaMartClient.Services
         public async Task<IEnumerable<PurchaseOrderReadDto>> GetPurchaseOrdersAsync()
         {
             var result = await _httpClient
-                .GetFromJsonAsync<IEnumerable<PurchaseOrderReadDto>>("/api/PurchaseOrders");
+                .GetFromJsonAsync<IEnumerable<PurchaseOrderReadDto>>("PurchaseOrders");
 
             return result ?? new List<PurchaseOrderReadDto>();
         }
 
         public async Task<PurchaseOrderReadDto?> GetPurchaseOrderAsync(int id)
         {
-            var response = await _httpClient.GetAsync($"/api/PurchaseOrders/{id}");
+            var response = await _httpClient.GetAsync($"PurchaseOrders/{id}");
 
             if (response.StatusCode == HttpStatusCode.NotFound)
                 return null;
@@ -127,19 +127,19 @@ namespace MegaMartClient.Services
 
         public async Task CreatePurchaseOrderAsync(PurchaseOrderCreateDto dto)
         {
-            var response = await _httpClient.PostAsJsonAsync("/api/PurchaseOrders", dto);
+            var response = await _httpClient.PostAsJsonAsync("PurchaseOrders", dto);
             response.EnsureSuccessStatusCode();
         }
 
         public async Task UpdatePurchaseOrderAsync(int id, PurchaseOrderUpdateDto dto)
         {
-            var response = await _httpClient.PutAsJsonAsync($"/api/PurchaseOrders/{id}", dto);
+            var response = await _httpClient.PutAsJsonAsync($"PurchaseOrders/{id}", dto);
             response.EnsureSuccessStatusCode();
         }
 
         public async Task DeletePurchaseOrderAsync(int id)
         {
-            var response = await _httpClient.DeleteAsync($"/api/PurchaseOrders/{id}");
+            var response = await _httpClient.DeleteAsync($"PurchaseOrders/{id}");
             response.EnsureSuccessStatusCode();
         }
     }
