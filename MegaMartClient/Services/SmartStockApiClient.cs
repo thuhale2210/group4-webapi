@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using MegaMartClient.Models;
 using MegaMartClient.Models.Dto;
+using MegaMartClient.Extensions;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace MegaMartClient.Services
 {
@@ -26,7 +28,7 @@ namespace MegaMartClient.Services
             }
         }
 
-        // ===================== PRODUCTS =====================
+        // PRODUCTS
 
         public async Task<IEnumerable<ProductReadDto>> GetProductsAsync()
         {
@@ -59,13 +61,28 @@ namespace MegaMartClient.Services
             response.EnsureSuccessStatusCode();
         }
 
+        public async Task PatchProductQuantityAsync(int id, int newQoH)
+        {
+            var patchDoc = new[]
+            {
+            new {
+                op = "replace",
+                path = "/quantityOnHand",
+                value = newQoH
+                }
+            };
+
+            var response = await _httpClient.PatchAsJsonAsync($"/api/products/{id}", patchDoc);
+            response.EnsureSuccessStatusCode();
+        }
+
         public async Task DeleteProductAsync(int id)
         {
             var response = await _httpClient.DeleteAsync($"Products/{id}");
             response.EnsureSuccessStatusCode();
         }
 
-        // ===================== SUPPLIERS =====================
+        // SUPPLIERS
 
         public async Task<IEnumerable<SupplierReadDto>> GetSuppliersAsync()
         {
@@ -98,13 +115,29 @@ namespace MegaMartClient.Services
             response.EnsureSuccessStatusCode();
         }
 
+        public async Task PatchSupplierContactAsync(int id, string phone)
+        {
+            var ops = new List<object>();
+
+            if (!string.IsNullOrWhiteSpace(phone))
+            {
+                ops.Add(new { op = "replace", path = "/phone", value = phone });
+            }
+
+            if (!ops.Any())
+                return; // nothing to patch
+
+            var response = await _httpClient.PatchAsJsonAsync($"/api/Suppliers/{id}", ops);
+            response.EnsureSuccessStatusCode();
+        }
+
         public async Task DeleteSupplierAsync(int id)
         {
             var response = await _httpClient.DeleteAsync($"Suppliers/{id}");
             response.EnsureSuccessStatusCode();
         }
 
-        // ===================== PURCHASE ORDERS =====================
+        // PURCHASE ORDERS
 
         public async Task<IEnumerable<PurchaseOrderReadDto>> GetPurchaseOrdersAsync()
         {
@@ -134,6 +167,17 @@ namespace MegaMartClient.Services
         public async Task UpdatePurchaseOrderAsync(int id, PurchaseOrderUpdateDto dto)
         {
             var response = await _httpClient.PutAsJsonAsync($"PurchaseOrders/{id}", dto);
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task PatchPurchaseOrderStatusAsync(int id, string newStatus)
+        {
+            var patchDoc = new[]
+            {
+            new { op = "replace", path = "/status", value = newStatus }
+            };
+
+            var response = await _httpClient.PatchAsJsonAsync($"/api/PurchaseOrders/{id}", patchDoc);
             response.EnsureSuccessStatusCode();
         }
 

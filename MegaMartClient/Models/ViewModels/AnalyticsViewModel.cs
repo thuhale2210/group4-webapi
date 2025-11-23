@@ -16,7 +16,7 @@
         public int ReceivedOrders { get; set; }
         public int CancelledOrders { get; set; }
 
-        // Optional: for charts / lists later
+        // For charts and lists
         public IList<MegaMartClient.Models.Dto.ProductReadDto> LowStockProductList { get; set; }
             = new List<MegaMartClient.Models.Dto.ProductReadDto>();
 

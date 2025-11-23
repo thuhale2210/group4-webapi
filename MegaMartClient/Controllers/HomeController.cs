@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MegaMartClient.Models;
+using MegaMartClient.Models.ViewModels;
 using MegaMartClient.Services;
 
 namespace MegaMartClient.Controllers
@@ -18,23 +18,23 @@ namespace MegaMartClient.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // 1. Call real API
+            // Fetch from API
             var products = (await _api.GetProductsAsync()).ToList();
             var suppliers = (await _api.GetSuppliersAsync()).ToList();
             var orders = (await _api.GetPurchaseOrdersAsync()).ToList();
 
-            // 2. Basic counts
+            // Overall Counts
             var totalProducts = products.Count;
             var lowStock = products.Count(p => p.QuantityOnHand <= p.ReorderLevel);
             var supplierCount = suppliers.Count;
             var openPoCount = orders.Count(o => o.Status == "Pending" || o.Status == "Confirmed");
 
-            // ? NEW: capture the actual low stock products
+            // Low stock products
             var lowStockProducts = products
                 .Where(p => p.QuantityOnHand <= p.ReorderLevel)
                 .ToList();
 
-            // 3. Stock by category (based on quantity)
+            // Stock quantity by category
             var totalQty = products.Sum(p => p.QuantityOnHand);
             var categoryBreakdown = products
                 .GroupBy(p => p.Category ?? "Other")
@@ -53,7 +53,7 @@ namespace MegaMartClient.Controllers
                 .OrderByDescending(c => c.Percentage)
                 .ToList();
 
-            // 4. Purchase orders – last 7 days
+            // last Weeks Purchase orders
             var today = DateOnly.FromDateTime(DateTime.Today);
             var sevenDaysAgo = today.AddDays(-6);
 
@@ -88,14 +88,11 @@ namespace MegaMartClient.Controllers
                 OpenPurchaseOrders = openPoCount,
                 CategoryBreakdown = categoryBreakdown,
                 Last7Days = last7Days,
-
-                // ? NEW
                 LowStockProducts = lowStockProducts
             };
 
             return View(vm);
         }
-
 
         public IActionResult Privacy()
         {

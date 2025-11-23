@@ -5,22 +5,77 @@
 }
 
 <div class="container mt-4">
-    <h1 class="mb-3">Supplier Details</h1>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <h1 class="mb-1">Supplier Details</h1>
+            <p class="text-muted mb-0">View and quickly update this supplier’s contact info.</p>
+        </div>
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+            <a asp-action="Index" class="btn btn-outline-secondary me-2">
+                ← Back to list
+            </a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                Edit full details
+            </a>
+        </div>
+    </div>
 
-    <dl class="row">
-        <dt class="col-sm-3">Id</dt>
-        <dd class="col-sm-9">@Model.Id</dd>
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-brand text-white">
+                    <strong>@Model.Name</strong>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">Id</dt>
+                        <dd class="col-sm-8">@Model.Id</dd>
 
-        <dt class="col-sm-3">Name</dt>
-        <dd class="col-sm-9">@Model.Name</dd>
+                        <dt class="col-sm-4">Name</dt>
+                        <dd class="col-sm-8">@Model.Name</dd>
 
-        <dt class="col-sm-3">Email</dt>
-        <dd class="col-sm-9">@Model.ContactEmail</dd>
+                        <dt class="col-sm-4">Email</dt>
+                        <dd class="col-sm-8">@Model.ContactEmail</dd>
 
-        <dt class="col-sm-3">Phone</dt>
-        <dd class="col-sm-9">@Model.Phone</dd>
-    </dl>
+                        <dt class="col-sm-4">Phone</dt>
+                        <dd class="col-sm-8">@Model.Phone</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
 
-    <a asp-action="Index" class="btn btn-outline-secondary">Back to list</a>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary ms-2">Edit</a>
+        <div class="col-lg-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-light">
+                    <strong>Quick Contact Update</strong>
+                    <span class="text-muted d-block small">
+                        Use this panel to patch just the email or phone without opening the full edit form.
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <form asp-action="QuickUpdateContact"
+                          asp-route-id="@Model.Id"
+                          method="post"
+                          class="mb-0">
+
+                        <div class="mb-3">
+                            <label for="quickPhone" class="form-label">Phone</label>
+                            <input id="quickPhone"
+                                   name="phone"
+                                   type="text"
+                                   class="form-control"
+                                   value="@Model.Phone" />
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button type="submit" class="btn btn-accent">
+                                Quick Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

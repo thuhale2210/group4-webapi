@@ -2,22 +2,14 @@
 
 @{
     ViewData["Title"] = "Low Stock Alerts";
-
-    // Simple mapping from SupplierId -> SupplierName for mock data
-    var supplierNames = new Dictionary<int, string>
-    {
-        { 1, "Fresh Farms Ltd." },
-        { 2, "Organic Harvest Co." },
-        { 3, "DairyPure Suppliers" }
-    };
 }
 
 <div class="container mt-4">
     <h1 class="mb-3">Low Stock Alerts</h1>
 
     <p class="text-muted">
-        Showing products where <strong>QuantityOnHand ≤ ReorderLevel</strong>.
-        This page is currently using <strong>mock data</strong> for UI/demo only.
+        Low Stock Alerts notify you when products have <strong>reached or fallen below their reorder level</strong>,
+        helping ensure inventory is replenished before it runs out.
     </p>
 
     @if (!Model.Any())
@@ -43,11 +35,6 @@
             <tbody>
                 @foreach (var p in Model)
                 {
-                    // Resolve supplier name from SupplierId
-                    var supplierName = supplierNames.ContainsKey(p.SupplierId)
-                    ? supplierNames[p.SupplierId]
-                    : $"Supplier #{p.SupplierId}";
-
                     <tr>
                         <td>
                             @if (!string.IsNullOrEmpty(p.ImageUrl))
@@ -57,17 +44,21 @@
                                      style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;" />
                             }
                         </td>
+
                         <td>@p.Name</td>
                         <td>@p.Category</td>
+
                         <td class="text-danger fw-bold">@p.QuantityOnHand</td>
                         <td>@p.ReorderLevel</td>
+
                         <td>
                             <a asp-controller="Suppliers"
                                asp-action="Details"
                                asp-route-id="@p.SupplierId">
-                                @supplierName
+                                @p.SupplierName
                             </a>
                         </td>
+
                         <td>
                             <a asp-controller="PurchaseOrders"
                                asp-action="Create"
@@ -79,7 +70,6 @@
                                class="btn btn-sm btn-success">
                                 Order
                             </a>
-
                         </td>
                     </tr>
                 }

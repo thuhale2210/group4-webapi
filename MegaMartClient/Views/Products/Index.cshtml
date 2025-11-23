@@ -50,26 +50,56 @@
                                 <strong>On Hand:</strong> @item.QuantityOnHand
                             </p>
                         </div>
+                        <div class="card-footer">
+                            <div class="d-flex flex-wrap gap-2">
 
-                        <div class="card-footer d-flex justify-content-between">
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">
-                                Details
-                            </a>
-                            <div>
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary me-1">
+                                <a asp-action="Details"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-outline-info btn-sm">
+                                    Details
+                                </a>
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-outline-secondary btn-sm">
                                     Edit
                                 </a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">
+
+                                <a asp-action="Delete"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-outline-danger btn-sm">
                                     Delete
                                 </a>
+
                                 <a asp-controller="PurchaseOrders"
                                    asp-action="Create"
                                    asp-route-productId="@item.Id"
-                                   class="btn btn-sm btn-warning ms-1">
+                                   class="btn btn-warning btn-sm">
                                     Restock
                                 </a>
+
+
+                                <form asp-action="QuickUpdateQoH"
+                                      asp-route-id="@item.Id"
+                                      method="post"
+                                      class="d-flex align-items-center gap-1">
+
+                                    <input type="number"
+                                           name="newQoH"
+                                           min="0"
+                                           step="1"
+                                           value="@item.QuantityOnHand"
+                                           class="form-control form-control-sm"
+                                           style="width:90px;" />
+
+                                    <button type="submit" class="btn btn-sm btn-success">
+                                        Update Qty
+                                    </button>
+                                </form>
+
                             </div>
                         </div>
+
                     </div>
                 </div>
             }

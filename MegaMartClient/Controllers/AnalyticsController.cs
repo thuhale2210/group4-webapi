@@ -18,7 +18,7 @@ namespace MegaMartClient.Controllers
         // GET: /Analytics
         public async Task<IActionResult> Index()
         {
-            // Fetch live data from API
+            // Fetch from API
             var products = (await _api.GetProductsAsync()).ToList();
             var suppliers = (await _api.GetSuppliersAsync()).ToList();
             var purchaseOrders = (await _api.GetPurchaseOrdersAsync()).ToList();
@@ -41,7 +41,7 @@ namespace MegaMartClient.Controllers
                 // Suppliers
                 TotalSuppliers = suppliers.Count,
 
-                // Purchase Orders
+                // Purchase Orders Status
                 TotalPurchaseOrders = purchaseOrders.Count,
                 PendingOrders = purchaseOrders.Count(po => po.Status == "Pending"),
                 ConfirmedOrders = purchaseOrders.Count(po => po.Status == "Confirmed"),

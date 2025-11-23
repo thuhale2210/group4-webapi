@@ -1,4 +1,4 @@
-namespace MegaMartClient.Models
+namespace MegaMartClient.Models.ViewModels
 {
     public class ErrorViewModel
     {
