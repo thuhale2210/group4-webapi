@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MegaMartClient.Models.Dto;
 using MegaMartClient.Services;
+using MegaMartClient.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 namespace MegaMartClient.Controllers
 {
@@ -19,6 +22,16 @@ namespace MegaMartClient.Controllers
         public async Task<IActionResult> Index()
         {
             var orders = await _api.GetPurchaseOrdersAsync();
+            var products = await _api.GetProductsAsync();
+            var suppliers = await _api.GetSuppliersAsync();
+
+            var productMap = products.ToDictionary(p => p.Id, p => p.Name);
+            var supplierMap = suppliers.ToDictionary(s => s.Id, s => s.Name);
+
+            // Attach names to each PO via ViewBag
+            ViewBag.ProductNames = productMap;
+            ViewBag.SupplierNames = supplierMap;
+
             var ordered = orders.OrderByDescending(o => o.CreatedAt).ToList();
             return View(ordered);
         }
@@ -27,53 +40,158 @@ namespace MegaMartClient.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var order = await _api.GetPurchaseOrderAsync(id);
-            if (order == null) return NotFound();
+            if (order == null)
+                return NotFound();
+
+            // Fetch related names
+            var product = await _api.GetProductAsync(order.ProductId);
+            var supplier = await _api.GetSupplierAsync(order.SupplierId);
+
+            ViewBag.ProductName = product?.Name ?? "Unknown Product";
+            ViewBag.SupplierName = supplier?.Name ?? "Unknown Supplier";
+
             return View(order);
         }
 
         // GET: /PurchaseOrders/Create
-        public IActionResult Create(int? productId, int? supplierId)
+        // GET: /PurchaseOrders/Create
+        public async Task<IActionResult> Create(int? productId)
         {
-            var vm = new PurchaseOrderCreateDto
+            var suppliers = await _api.GetSuppliersAsync();
+            var products = await _api.GetProductsAsync();
+
+            var vm = new PurchaseOrderFormViewModel
             {
-                ProductId = productId ?? 0,
-                SupplierId = supplierId ?? 0,
-                Quantity = 1
+                SupplierOptions = suppliers.Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Name
+                }),
+                ProductOptions = products.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name,
+                    Selected = productId.HasValue && productId.Value == p.Id
+                }),
+                ProductId = productId ?? 0
             };
+
+            if (productId.HasValue)
+            {
+                var selected = products.FirstOrDefault(p => p.Id == productId.Value);
+                if (selected != null)
+                {
+                    vm.SelectedProductName = selected.Name;
+                    vm.SelectedProductCategory = selected.Category;
+                    vm.SelectedProductQuantityOnHand = selected.QuantityOnHand;
+                    vm.SelectedProductReorderLevel = selected.ReorderLevel;
+
+                    // Simple suggestion: order enough to reach 2x reorder level
+                    // e.g., if Reorder = 20 and stock = 5 → suggest 35
+                    var targetLevel = selected.ReorderLevel * 2;
+                    var suggested = targetLevel - selected.QuantityOnHand;
+                    if (suggested < 0) suggested = 0;
+
+                    vm.SuggestedQuantity = suggested;
+                    vm.Quantity = suggested; // pre-fill the form
+                }
+            }
 
             return View(vm);
         }
 
+
+
         // POST: /PurchaseOrders/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PurchaseOrderCreateDto dto)
+        public async Task<IActionResult> Create(PurchaseOrderFormViewModel vm)
         {
-            if (!ModelState.IsValid) return View(dto);
+            if (!ModelState.IsValid)
+            {
+                var suppliers = await _api.GetSuppliersAsync();
+                var products = await _api.GetProductsAsync();
+
+                vm.SupplierOptions = suppliers.Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Name
+                });
+                vm.ProductOptions = products.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name,
+                    Selected = vm.ProductId == p.Id
+                });
+
+                var selected = products.FirstOrDefault(p => p.Id == vm.ProductId);
+                if (selected != null)
+                {
+                    vm.SelectedProductName = selected.Name;
+                    vm.SelectedProductCategory = selected.Category;
+                    vm.SelectedProductQuantityOnHand = selected.QuantityOnHand;
+                    vm.SelectedProductReorderLevel = selected.ReorderLevel;
+
+                    var targetLevel = selected.ReorderLevel * 2;
+                    var suggested = targetLevel - selected.QuantityOnHand;
+                    if (suggested < 0) suggested = 0;
+
+                    vm.SuggestedQuantity = suggested;
+                }
+
+                return View(vm);
+            }
+
+            var dto = new PurchaseOrderCreateDto
+            {
+                SupplierId = vm.SupplierId,
+                ProductId = vm.ProductId,
+                Quantity = vm.Quantity
+            };
 
             await _api.CreatePurchaseOrderAsync(dto);
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: /PurchaseOrders/Edit/5
+
+        // GET: /PurchaseOrders/Edit/14
         public async Task<IActionResult> Edit(int id)
         {
-            var order = await _api.GetPurchaseOrderAsync(id);
-            if (order == null) return NotFound();
+            var po = await _api.GetPurchaseOrderAsync(id);
+            if (po == null)
+                return NotFound();
+
+            // for header info
+            ViewBag.Id = po.Id;
+            ViewBag.CreatedAt = po.CreatedAt;
+
+            // build dropdown lists
+            var suppliers = await _api.GetSuppliersAsync();
+            var products = await _api.GetProductsAsync();
+
+            ViewBag.SupplierOptions = suppliers.Select(s => new SelectListItem
+            {
+                Value = s.Id.ToString(),
+                Text = s.Name
+            });
+
+            ViewBag.ProductOptions = products.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.Name
+            });
 
             var vm = new PurchaseOrderUpdateDto
             {
-                Status = order.Status,
-                ProductId = order.ProductId,
-                Quantity = order.Quantity,
-                SupplierId = order.SupplierId
+                Status = po.Status,
+                ProductId = po.ProductId,
+                Quantity = po.Quantity,
+                SupplierId = po.SupplierId
             };
-
-            ViewBag.Id = id;
-            ViewBag.CreatedAt = order.CreatedAt;
 
             return View(vm);
         }
+
 
         // POST: /PurchaseOrders/Edit/5
         [HttpPost]
@@ -83,12 +201,30 @@ namespace MegaMartClient.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.Id = id;
+
+                // repopulate dropdowns
+                var suppliers = await _api.GetSuppliersAsync();
+                var products = await _api.GetProductsAsync();
+
+                ViewBag.SupplierOptions = suppliers.Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Name
+                });
+
+                ViewBag.ProductOptions = products.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name
+                });
+
                 return View(dto);
             }
 
             await _api.UpdatePurchaseOrderAsync(id, dto);
             return RedirectToAction(nameof(Index));
         }
+
 
         // GET: /PurchaseOrders/Delete/5
         public async Task<IActionResult> Delete(int id)

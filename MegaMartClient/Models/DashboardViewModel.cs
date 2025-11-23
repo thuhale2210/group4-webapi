@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MegaMartClient.Models.Dto;   // ⬅️ add this
 
 namespace MegaMartClient.Models
 {
@@ -12,6 +13,9 @@ namespace MegaMartClient.Models
 
         public List<CategoryStockItem> CategoryBreakdown { get; set; } = new();
         public List<DailyPoStat> Last7Days { get; set; } = new();
+
+        // ⭐ NEW: for Low Stock Products chart
+        public List<ProductReadDto> LowStockProducts { get; set; } = new();
     }
 
     public class CategoryStockItem

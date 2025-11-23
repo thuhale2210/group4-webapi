@@ -29,6 +29,11 @@ namespace MegaMartClient.Controllers
             var supplierCount = suppliers.Count;
             var openPoCount = orders.Count(o => o.Status == "Pending" || o.Status == "Confirmed");
 
+            // ? NEW: capture the actual low stock products
+            var lowStockProducts = products
+                .Where(p => p.QuantityOnHand <= p.ReorderLevel)
+                .ToList();
+
             // 3. Stock by category (based on quantity)
             var totalQty = products.Sum(p => p.QuantityOnHand);
             var categoryBreakdown = products
@@ -82,11 +87,15 @@ namespace MegaMartClient.Controllers
                 SupplierCount = supplierCount,
                 OpenPurchaseOrders = openPoCount,
                 CategoryBreakdown = categoryBreakdown,
-                Last7Days = last7Days
+                Last7Days = last7Days,
+
+                // ? NEW
+                LowStockProducts = lowStockProducts
             };
 
             return View(vm);
         }
+
 
         public IActionResult Privacy()
         {

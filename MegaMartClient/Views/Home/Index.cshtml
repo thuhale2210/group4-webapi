@@ -17,76 +17,128 @@
 
     <!-- Top KPI cards -->
     <div class="row mb-4">
+
+        <!-- Total Products -->
         <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6 class="card-subtitle text-muted mb-1">Total Products</h6>
-                    <h3 class="card-title">@Model.TotalProducts</h3>
+            <a asp-controller="Products" asp-action="Index" class="text-decoration-none text-reset">
+                <div class="card shadow-sm hover-shadow">
+                    <div class="card-body">
+                        <h6 class="card-subtitle text-muted mb-1">Total Products</h6>
+                        <h3 class="card-title">@Model.TotalProducts</h3>
+                        <small class="text-muted">Current amount of products</small>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
 
+        <!-- Low Stock Items -->
         <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6 class="card-subtitle text-muted mb-1">Low Stock Items</h6>
-                    <h3 class="card-title text-warning">@Model.LowStockItems</h3>
-                    <small class="text-muted">Qty ≤ reorder level</small>
+            <a asp-controller="Products" asp-action="LowStock" class="text-decoration-none text-reset">
+                <div class="card shadow-sm hover-shadow">
+                    <div class="card-body">
+                        <h6 class="card-subtitle text-muted mb-1">Low Stock Items</h6>
+                        <h3 class="card-title text-warning">@Model.LowStockItems</h3>
+                        <small class="text-muted">Qty ≤ reorder level</small>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
 
+        <!-- Supplier Count -->
         <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6 class="card-subtitle text-muted mb-1">Suppliers</h6>
-                    <h3 class="card-title">@Model.SupplierCount</h3>
-                    <small class="text-muted">Active partners</small>
+            <a asp-controller="Suppliers" asp-action="Index" class="text-decoration-none text-reset">
+                <div class="card shadow-sm hover-shadow">
+                    <div class="card-body">
+                        <h6 class="card-subtitle text-muted mb-1">Suppliers</h6>
+                        <h3 class="card-title">@Model.SupplierCount</h3>
+                        <small class="text-muted">Active partners</small>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
 
+        <!-- Open POs -->
         <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6 class="card-subtitle text-muted mb-1">Open POs</h6>
-                    <h3 class="card-title text-info">@Model.OpenPurchaseOrders</h3>
-                    <small class="text-muted">Pending / Confirmed</small>
+            <a asp-controller="PurchaseOrders" asp-action="Index" class="text-decoration-none text-reset">
+                <div class="card shadow-sm hover-shadow">
+                    <div class="card-body">
+                        <h6 class="card-subtitle text-muted mb-1">Open POs</h6>
+                        <h3 class="card-title text-info">@Model.OpenPurchaseOrders</h3>
+                        <small class="text-muted">Pending / Confirmed</small>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
+
     </div>
 
-    <!-- Charts row -->
+
+    <!-- Low Stock Products Chart -->
+    <!-- Analytics detail row: Low stock + POs side by side -->
     <div class="row mb-4">
 
-        <!-- Stock by Category -->
+        <!-- Low Stock Products -->
         <div class="col-md-6">
             <div class="card shadow-sm mb-3">
                 <div class="card-body">
-                    <h5 class="card-title mb-3">Stock by Category</h5>
+                    <h5 class="card-title mb-3">Low Stock Products</h5>
 
-                    @if (Model.CategoryBreakdown.Any())
+                    @if (Model.LowStockProducts != null && Model.LowStockProducts.Any())
                     {
-                        @foreach (var item in Model.CategoryBreakdown)
-                        {
-                            <div class="mb-2">
-                                <div class="d-flex justify-content-between">
-                                    <span>@item.Category</span>
-                                    <span>@item.Percentage%</span>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar"
-                                         style="width: @item.Percentage%">
+                        <ul class="list-unstyled mb-0">
+                            @foreach (var p in Model.LowStockProducts)
+                            {
+                                var ratio = p.ReorderLevel == 0 ? 0 : (decimal)p.QuantityOnHand / p.ReorderLevel * 100;
+
+                                string icon;
+                                string barClass;
+
+                                if (ratio <= 50)
+                                {
+                                    icon = "❗";
+                                    barClass = "bg-danger";   // red
+                                }
+                                else if (ratio < 90)
+                                {
+                                    icon = "⚠️";
+                                    barClass = "bg-warning"; // yellow
+                                }
+                                else
+                                {
+                                    icon = "✅";
+                                    barClass = "bg-success"; // green
+                                }
+
+                                <li class="mb-2">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <span>@icon</span>
+                                            <strong>@p.Name</strong>
+                                            <span class="text-muted">(@p.Category)</span>
+                                        </div>
+                                        <small class="text-muted">@p.QuantityOnHand in stock</small>
                                     </div>
-                                </div>
-                            </div>
-                        }
+
+                                    <a asp-controller="PurchaseOrders"
+                                       asp-action="Create"
+                                       asp-route-productId="@p.Id"
+                                       class="text-decoration-none">
+                                        <div class="progress" style="height: 6px;">
+                                            <div class="progress-bar @barClass"
+                                                 role="progressbar"
+                                                 style="width:@ratio%">
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+
+                        </ul>
                     }
                     else
                     {
                         <p class="text-muted mb-0">
-                            No product data available yet.
+                            No products are currently below their reorder level.
                         </p>
                     }
                 </div>
@@ -117,11 +169,11 @@
                                         <td>@day.PoCount</td>
                                         <td>
                                             <span class="badge
-                                                        @(day.StatusLabel == "Received" ? "bg-success" :
-                                                                                                    day.StatusLabel == "Pending" ? "bg-warning text-dark" :
-                                                                                                    day.StatusLabel == "Confirmed" ? "bg-info text-dark" :
-                                                                                                    day.StatusLabel == "Cancelled" ? "bg-secondary" :
-                                                                                                                                    "bg-light text-dark")">
+                                                            @(day.StatusLabel == "Received" ? "bg-success" :
+                                                                                                        day.StatusLabel == "Pending" ? "bg-warning text-dark" :
+                                                                                                        day.StatusLabel == "Confirmed" ? "bg-info text-dark" :
+                                                                                                        day.StatusLabel == "Cancelled" ? "bg-secondary" :
+                                                                                                                                         "bg-light text-dark")">
                                         @day.StatusLabel
                                     </span>
                                 </td>
@@ -141,6 +193,7 @@
         </div>
 
     </div>
+
 
     <!-- Navigation cards -->
     <h4 class="mt-4 mb-3">Manage SmartStock System</h4>

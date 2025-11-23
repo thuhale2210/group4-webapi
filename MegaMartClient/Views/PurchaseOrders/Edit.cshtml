@@ -1,4 +1,6 @@
-﻿@model MegaMartClient.Models.Dto.PurchaseOrderUpdateDto
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model MegaMartClient.Models.Dto.PurchaseOrderUpdateDto
+
 
 @{
     ViewData["Title"] = "Edit Purchase Order";
@@ -36,9 +38,14 @@
 
         <div class="mb-3">
             <label asp-for="ProductId" class="form-label"></label>
-            <input asp-for="ProductId" class="form-control" />
+            <select asp-for="ProductId"
+                    class="form-select"
+                    asp-items="(IEnumerable<SelectListItem>)ViewBag.ProductOptions">
+                <option value="">-- Select Product --</option>
+            </select>
             <span asp-validation-for="ProductId" class="text-danger"></span>
         </div>
+
 
         <div class="mb-3">
             <label asp-for="Quantity" class="form-label"></label>
@@ -48,9 +55,14 @@
 
         <div class="mb-3">
             <label asp-for="SupplierId" class="form-label"></label>
-            <input asp-for="SupplierId" class="form-control" />
+            <select asp-for="SupplierId"
+                    class="form-select"
+                    asp-items="(IEnumerable<SelectListItem>)ViewBag.SupplierOptions">
+                <option value="">-- Select Supplier --</option>
+            </select>
             <span asp-validation-for="SupplierId" class="text-danger"></span>
         </div>
+
 
         <button type="submit" class="btn btn-primary">Save Changes</button>
         <a asp-action="Index" class="btn btn-outline-secondary ms-2">Cancel</a>

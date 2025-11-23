@@ -7,56 +7,74 @@
 <h1 class="mb-3">Products</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New Product</a>
+    <a asp-action="Create" class="btn btn-primary mb-3">Create New Product</a>
 </p>
 
-<table class="table table-striped table-bordered align-middle">
-    <thead class="table-light">
-        <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Unit Price</th>
-            <th>Quantity</th>
-            <th>Reorder Level</th>
-            <th>Supplier</th>
-            <th style="width: 220px;"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @if (!string.IsNullOrEmpty(item.ImageUrl))
-                    {
-                        <img src="@item.ImageUrl"
-                             alt="@item.Name"
-                             style="max-width:80px;max-height:80px;border-radius:4px;" />
-                    }
-                    else
-                    {
-                        <span class="text-muted">No image</span>
-                    }
-                </td>
-                <td>@item.Name</td>
-                <td>@item.Category</td>
-                <td>@item.UnitPrice.ToString("C")</td>
-                <td>@item.QuantityOnHand</td>
-                <td>@item.ReorderLevel</td>
-                <td>@item.SupplierId</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary me-1">
-                        Details
-                    </a>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning me-1">
-                        Edit
-                    </a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
-                        Delete
-                    </a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@foreach (var categoryGroup in Model.GroupBy(p => p.Category))
+{
+    <section class="mb-4">
+        <h3 class="mb-3">@categoryGroup.Key</h3>
+
+        <div class="row row-cols-1 row-cols-md-3 g-3">
+            @foreach (var item in categoryGroup)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        {
+                            <img src="@item.ImageUrl"
+                                 class="card-img-top"
+                                 alt="@item.Name" />
+                        }
+
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Name</h5>
+
+                            <p class="card-text mb-1">
+                                <strong>Supplier:</strong>
+                                @if (!string.IsNullOrEmpty(item.SupplierName))
+                                {
+                                    @item.SupplierName
+                                }
+                                else
+                                {
+                                    @("ID: " + item.SupplierId)
+                                }
+                            </p>
+
+                            <p class="card-text mb-1">
+                                <strong>Price:</strong> @item.UnitPrice.ToString("C")
+                            </p>
+
+                            <p class="card-text mb-1">
+                                <strong>On Hand:</strong> @item.QuantityOnHand
+                            </p>
+                        </div>
+
+                        <div class="card-footer d-flex justify-content-between">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">
+                                Details
+                            </a>
+                            <div>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary me-1">
+                                    Edit
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">
+                                    Delete
+                                </a>
+                                <a asp-controller="PurchaseOrders"
+                                   asp-action="Create"
+                                   asp-route-productId="@item.Id"
+                                   class="btn btn-sm btn-warning ms-1">
+                                    Restock
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+    <hr />
+}

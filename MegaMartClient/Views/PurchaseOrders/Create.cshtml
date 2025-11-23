@@ -1,55 +1,35 @@
-﻿@model MegaMartClient.Models.Dto.PurchaseOrderCreateDto
+﻿@model MegaMartClient.Models.ViewModels.PurchaseOrderFormViewModel
+@using Microsoft.AspNetCore.Mvc.Rendering
 
 @{
     ViewData["Title"] = "Create Purchase Order";
-
-    var productName = ViewBag.ProductName as string ?? "Selected Product";
-    int? currentQty = ViewBag.CurrentQty as int?;
-    int? reorderLevel = ViewBag.ReorderLevel as int?;
 }
 
 <div class="container mt-4">
     <h1 class="mb-4">Create Purchase Order</h1>
 
     <div class="row">
-        <!-- Summary card -->
-        <div class="col-md-5 mb-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">@productName</h5>
-
-                    <p class="mb-1">
-                        <strong>Product Id:</strong> @Model.ProductId
-                    </p>
-                    <p class="mb-1">
-                        <strong>Supplier Id:</strong> @Model.SupplierId
-                    </p>
-
-                    @if (currentQty.HasValue && reorderLevel.HasValue)
-                    {
-                        <p class="mb-1">
-                            <strong>Current Stock:</strong> @currentQty
-                        </p>
-                        <p class="mb-1">
-                            <strong>Reorder Level:</strong> @reorderLevel
-                        </p>
-                    }
-
-                    <p class="mt-2 text-muted small">
-                        Fields are pre-filled based on the low stock item you selected.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Form -->
-        <div class="col-md-7">
+        <!-- LEFT: FORM -->
+        <div class="col-md-6">
             <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                 <div class="mb-3">
-                    <label asp-for="ProductId" class="form-label">Product</label>
+                    <label asp-for="SupplierId" class="form-label"></label>
+                    <select asp-for="SupplierId"
+                            class="form-select"
+                            asp-items="Model.SupplierOptions">
+                        <option value="">-- Select Supplier --</option>
+                    </select>
+                    <span asp-validation-for="SupplierId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ProductId" class="form-label"></label>
                     <select asp-for="ProductId"
                             class="form-select"
-                            asp-items="ViewBag.Products">
+                            asp-items="Model.ProductOptions">
+                        <option value="">-- Select Product --</option>
                     </select>
                     <span asp-validation-for="ProductId" class="text-danger"></span>
                 </div>
@@ -58,30 +38,84 @@
                     <label asp-for="Quantity" class="form-label"></label>
                     <input asp-for="Quantity" class="form-control" />
                     <span asp-validation-for="Quantity" class="text-danger"></span>
+
+                    @if (Model.SuggestedQuantity.HasValue)
+                    {
+                        <small class="text-muted">
+                            Suggested quantity: @Model.SuggestedQuantity.Value
+                            (based on current inventory)
+                        </small>
+                    }
                 </div>
 
-                <div class="mb-3">
-                    <label asp-for="SupplierId" class="form-label">Supplier</label>
-                    <select asp-for="SupplierId"
-                            class="form-select"
-                            asp-items="ViewBag.Suppliers">
-                    </select>
-                    <span asp-validation-for="SupplierId" class="text-danger"></span>
-                </div>
-
-                <p class="text-muted small">
-                    <strong>Note:</strong> Status will be set to <code>Pending</code> and CreatedAt will be set to the current time.
-                </p>
-
-                <button type="submit" class="btn btn-primary">Create</button>
-                <a asp-action="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
+                <button type="submit" class="btn btn-primary mt-2">Create</button>
+                <a asp-action="Index" class="btn btn-outline-secondary mt-2">Cancel</a>
             </form>
+        </div>
+
+        <!-- RIGHT: CURRENT INVENTORY PANEL -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Current Inventory</h5>
+
+                    @if (!string.IsNullOrEmpty(Model.SelectedProductName))
+                    {
+                        <p class="mb-1">
+                            <strong>Product:</strong> @Model.SelectedProductName
+                        </p>
+                        @if (!string.IsNullOrEmpty(Model.SelectedProductCategory))
+                        {
+                            <p class="mb-1">
+                                <strong>Category:</strong> @Model.SelectedProductCategory
+                            </p>
+                        }
+
+                        @if (Model.SelectedProductQuantityOnHand.HasValue)
+                        {
+                            <p class="mb-1">
+                                <strong>On Hand:</strong> @Model.SelectedProductQuantityOnHand
+                            </p>
+                        }
+
+                        @if (Model.SelectedProductReorderLevel.HasValue)
+                        {
+                            <p class="mb-3">
+                                <strong>Reorder Level:</strong> @Model.SelectedProductReorderLevel
+                            </p>
+                        }
+
+                        @if (Model.SelectedProductQuantityOnHand.HasValue &&
+                                            Model.SelectedProductReorderLevel.HasValue)
+                        {
+                            var onHand = Model.SelectedProductQuantityOnHand.Value;
+                            var reorder = Model.SelectedProductReorderLevel.Value;
+                            var diff = reorder - onHand;
+
+                            <p class="mb-0">
+                                @if (diff > 0)
+                                {
+                                    <span class="text-danger">
+                                        You are @diff units below reorder level.
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-success">
+                                        You are at or above reorder level.
+                                    </span>
+                                }
+                            </p>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">
+                            Select a product (or use a Restock shortcut) to see current inventory.
+                        </p>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

@@ -25,9 +25,9 @@
                 <th>Id</th>
                 <th>Created At</th>
                 <th>Status</th>
-                <th>Product Id</th>
+                <th>Product</th>
                 <th>Quantity</th>
-                <th>Supplier Id</th>
+                <th>Supplier</th>
                 <th style="width: 220px;">Actions</th>
             </tr>
         </thead>
@@ -47,9 +47,21 @@
                     <td>@po.Id</td>
                     <td>@po.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
                     <td><span class="@statusClass">@po.Status</span></td>
-                    <td>@po.ProductId</td>
+                    <td>
+                        @(
+                            ViewBag.ProductNames.ContainsKey(po.ProductId)
+                            ? ViewBag.ProductNames[po.ProductId]
+                            : $"Unknown (ID {po.ProductId})"
+                        )
+                    </td>
                     <td>@po.Quantity</td>
-                    <td>@po.SupplierId</td>
+                    <td>
+                        @(
+                            ViewBag.SupplierNames.ContainsKey(po.SupplierId)
+                            ? ViewBag.SupplierNames[po.SupplierId]
+                            : $"Unknown (ID {po.SupplierId})"
+                        )
+                    </td>
                     <td>
                         <a asp-action="Details"
                            asp-route-id="@po.Id"
