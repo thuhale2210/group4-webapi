@@ -1,0 +1,120 @@
+{
+    "compatibilities": [
+        "EC2",
+        "MANAGED_INSTANCES",
+        "FARGATE"
+    ],
+    "containerDefinitions": [
+        {
+            "cpu": 0,
+            "environment": [
+                {
+                    "name": "PARAM_DB_PORT",
+                    "value": "/freshsourcedb/port"
+                },
+                {
+                    "name": "AWS_REGION",
+                    "value": "us-east-1"
+                },
+                {
+                    "name": "ASPNETCORE_ENVIRONMENT",
+                    "value": "Development"
+                },
+                {
+                    "name": "PARAM_DB_PASSWORD",
+                    "value": "/freshsourcedb/password"
+                },
+                {
+                    "name": "PARAM_DB_NAME",
+                    "value": "/freshsourcedb/name"
+                },
+                {
+                    "name": "PARAM_DB_USER",
+                    "value": "/freshsourcedb/user"
+                },
+                {
+                    "name": "PARAM_DB_HOST",
+                    "value": "/freshsourcedb/host"
+                }
+            ],
+            "environmentFiles": [],
+            "essential": true,
+            "image": "723858001767.dkr.ecr.us-east-1.amazonaws.com/freshsource-api:dev",
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/freshsource-api-task",
+                    "awslogs-create-group": "true",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "mountPoints": [],
+            "name": "freshsource-api-container",
+            "portMappings": [
+                {
+                    "appProtocol": "http",
+                    "containerPort": 8080,
+                    "hostPort": 8080,
+                    "name": "freshsource-api-container-8080-tcp",
+                    "protocol": "tcp"
+                }
+            ],
+            "systemControls": [],
+            "ulimits": [],
+            "volumesFrom": []
+        }
+    ],
+    "cpu": "1024",
+    "enableFaultInjection": false,
+    "executionRoleArn": "arn:aws:iam::723858001767:role/FreshSourceTaskRole",
+    "family": "freshsource-api-task",
+    "memory": "3072",
+    "networkMode": "awsvpc",
+    "placementConstraints": [],
+    "registeredAt": "2025-11-16T08:51:48.174Z",
+    "registeredBy": "arn:aws:iam::723858001767:user/thuhale",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "revision": 1,
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "status": "ACTIVE",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:723858001767:task-definition/freshsource-api-task:1",
+    "taskRoleArn": "arn:aws:iam::723858001767:role/FreshSourceTaskRole",
+    "volumes": [],
+    "tags": []
+}
